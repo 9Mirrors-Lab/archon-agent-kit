@@ -1,0 +1,297 @@
+---
+alwaysApply: false
+---
+# Generate Base PRP Template Rule
+
+## Purpose
+
+This rule generates technology-specific base PRP templates (`prp-base-{tech}.md`) from `INITIAL.md` files. It creates the foundational schema that Archon MCP will use to generate feature-specific PRPs.
+
+## Core Workflow
+
+**Input**: `PRPs/INITIAL.md` with project context (+ Project Name)
+**Output (Local)**: `PRPs/templates/prp-base-{tech}.json` (technology-specific base PRP as JSON)
+**Output (Archon)**: New PRP document stored via Archon MCP with `document_type="prp"`
+**Method**: Dynamic technology detection + universal + Archon-specific layers, serialized as PRP JSON
+
+## Technology Detection Logic
+
+### 1. Framework Detection
+**Scan for mentions of:**
+- **Frontend**: React, Next.js, Vue, Svelte, Remix, Angular
+- **Backend**: FastAPI, Express, Django, Flask, Spring, .NET
+- **Mobile**: React Native, Flutter, Swift, Kotlin
+- **CLI**: Click, Typer, Commander, argparse, clap
+- **Database**: PostgreSQL, MongoDB, Redis, SQLite, Prisma, Drizzle
+
+### 2. Documentation URL Detection
+**Extract tech from URLs:**
+- `supabase.com/docs` → Supabase
+- `nextjs.org/docs` → Next.js
+- `docs.python.org` → Python
+- `docs.rs` → Rust
+- `developer.mozilla.org` → Web technologies
+
+### 3. File Path Pattern Detection
+**Infer tech from examples:**
+- `app/page.tsx` → Next.js App Router
+- `src/main.rs` → Rust
+- `src/main.py` → Python
+- `src/App.jsx` → React
+- `src/components/` → Component-based framework
+
+## Template Structure
+
+### Layer 1: Universal (Always Included)
+
+#### 4-Level Validation Loop
+```markdown
+## Validation Loop
+
+### Level 1: Syntax & Style
+- [ ] Ruff linting and formatting
+- [ ] MyPy type checking (if applicable)
+- [ ] ESLint/Prettier (if applicable)
+- [ ] Zero errors before proceeding
+
+### Level 2: Unit Tests
+- [ ] Test each component as created
+- [ ] Follow existing test patterns
+- [ ] Full coverage of public methods
+- [ ] Mock external dependencies
+
+### Level 3: Integration Testing
+- [ ] Service startup validation
+- [ ] Endpoint testing
+- [ ] Database connectivity
+- [ ] MCP tool validation
+- [ ] Cross-component communication
+
+### Level 4: Creative Validation
+- [ ] Domain-specific testing
+- [ ] Performance validation
+- [ ] Security scanning
+- [ ] Load testing if applicable
+- [ ] User experience validation
+```
+
+#### Patterns and Gotchas
+```markdown
+## Patterns and Gotchas
+
+### Common Patterns
+- [Pattern description with file path reference]
+- [Implementation example]
+- [When to use this pattern]
+
+### Known Gotchas
+- [Common pitfall description]
+- [Why it happens]
+- [How to avoid it]
+- [Alternative approaches]
+```
+
+#### Anti-Patterns
+```markdown
+## Anti-Patterns to Avoid
+
+### ❌ Never Do This
+- [Anti-pattern description]
+- [Why it's problematic]
+- [What to do instead]
+
+### ❌ Common Mistakes
+- [Mistake description]
+- [Impact on system]
+- [Correct approach]
+```
+
+### Layer 2: Archon-Specific
+
+#### Project Structure Templates
+```markdown
+## Desired Codebase Tree with Files to Add
+
+### Current State
+```
+[Current file tree from INITIAL.md analysis]
+```
+
+### Target State
+```
+[Desired file tree with new files highlighted]
+```
+
+### File Naming Conventions
+- **Models**: `snake_case` for Python, `PascalCase` for TypeScript
+- **Services**: `snake_case` for Python, `camelCase` for TypeScript
+- **Components**: `PascalCase` for React/Vue components
+- **Utilities**: `snake_case` for Python, `camelCase` for TypeScript
+- **Tests**: `test_*.py` for Python, `*.test.ts` for TypeScript
+```
+
+#### Known Gotchas of Our Codebase
+```markdown
+## Known Gotchas of Our Codebase
+
+### Architecture Constraints
+- [Specific limitation or constraint]
+- [Why it exists]
+- [How to work around it]
+
+### Integration Points
+- [MCP tool integration requirement]
+- [Database connection pattern]
+- [External service integration]
+- [Error handling approach]
+```
+
+## Implementation Steps
+
+### Step 1: Resolve Project and Parse INITIAL.md
+```bash
+# Resolve project name:
+# Priority: (a) second CLI arg to this rule, (b) parse from INITIAL.md (e.g., "Project Name:"), (c) fail with instruction to supply project name
+
+# Ensure Archon project exists and capture project_id
+# 1) Try to find by title, else create
+archon:manage_project(action="list")
+#   - find project where title == {project_name}
+#   - if not found → archon:manage_project(action="create", title="{project_name}")
+#   - capture {project_id}
+
+# Analyze INITIAL.md
+archon:perform_rag_query(query="technology frameworks tools", source="INITIAL.md")
+archon:search_code_examples(query="file structure patterns", source="INITIAL.md")
+```
+
+### Step 2: Detect Technology Stack
+```bash
+# Analyze content for technology indicators
+# Extract framework mentions, documentation URLs, file patterns
+# Determine primary and secondary technologies
+```
+
+### Step 3: Generate Universal Layer
+```bash
+# Always include 4-level validation loop
+# Always include patterns and gotchas section
+# Always include anti-patterns section
+```
+
+### Step 4: Generate Archon-Specific Layer
+```bash
+# Create project structure templates
+# Define file naming conventions
+# Specify file placement rules
+# Document codebase-specific gotchas
+```
+
+### Step 5: Save PRP Base Template (JSON)
+```bash
+# 1) Write local JSON file
+#    Path: PRPs/templates/prp-base-{detected_tech}.json
+
+# 2) Save to Archon MCP as a PRP document
+archon:manage_document(
+  action="create",
+  project_id="{project_id}",
+  document_type="prp",            # PRP documents must use "prp"
+  title="prp-base-{detected_tech}",
+  content={generated_prp_json}     # Structured JSON (see schema below)
+)
+```
+
+## PRP JSON Schema (Must Match Exactly)
+
+The generated base template MUST be structured JSON compatible with PRPViewer (NOT markdown):
+
+```json
+{
+  "document_type": "prp",
+  "title": "Base Template - {DetectedTech}",
+  "version": "1.0",
+  "author": "prp-creator",
+  "date": "{ISO-YYYY-MM-DD}",
+  "status": "draft",
+
+  "goal": "{High-level implementation goal tailored to {DetectedTech}}",
+
+  "why": [
+    "{Business value}",
+    "{Integration benefit}",
+    "{Problem being solved}"
+  ],
+
+  "what": {
+    "description": "{Scope of what this base template targets for {DetectedTech}}",
+    "success_criteria": [
+      "{Measurable success criterion 1}",
+      "{Measurable success criterion 2}"
+    ],
+    "user_stories": [
+      "{As a <role>, I want <capability> so that <benefit>}"
+    ]
+  },
+
+  "context": {
+    "documentation": [
+      {"source": "{Doc URL 1}", "why": "{Relevance}"},
+      {"source": "{Doc URL 2}", "why": "{Relevance}"}
+    ],
+    "existing_code": [
+      {"file": "{example/path/or/pattern}", "purpose": "{What it shows}"}
+    ],
+    "gotchas": [
+      "{Known pitfall 1}",
+      "{Known pitfall 2}"
+    ],
+    "current_state": "{Summary of current system from INITIAL.md}",
+    "dependencies": [
+      "{Lib/Tool 1}", "{Lib/Tool 2}"
+    ],
+    "environment_variables": [
+      "{ENV_1}", "{ENV_2}"
+    ]
+  },
+
+  "implementation_blueprint": {
+    "phase_1": {
+      "description": "{Foundational setup for {DetectedTech}}",
+      "tasks": [
+        {"title": "{Task 1}", "files": ["{path/example}"], "details": "{What to implement}"}
+      ]
+    },
+    "phase_2": {
+      "description": "{Next layer of functionality}",
+      "tasks": [
+        {"title": "{Task 2}", "files": ["{path/example}"], "details": "{What to implement}"}
+      ]
+    }
+  },
+
+  "validation": {
+    "level_1_syntax": ["{lint/type-check commands}"],
+    "level_2_unit_tests": ["{unit test commands}"],
+    "level_3_integration": ["{integration test commands}"],
+    "level_4_end_to_end": ["{creative/end-to-end validation steps}"]
+  },
+
+  "additional_context": {
+    "security_considerations": [
+      "{Security guidance relevant to {DetectedTech}}"
+    ],
+    "testing_strategies": [
+      "{How to mock, what to test}"
+    ],
+    "monitoring_and_logging": [
+      "{What to monitor, key metrics}"
+    ]
+  }
+}
+```
+
+Notes:
+- Populate fields from INITIAL.md and detected technology (docs, examples, gotchas, deps, env vars).
+- Keep content high-signal; this is a base template blueprint, not a feature PRP.
+

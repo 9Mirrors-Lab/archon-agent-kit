@@ -1,0 +1,200 @@
+---
+alwaysApply: true
+---
+
+# Create PRP (Advanced Implementation Focus)
+
+## Feature file: $ARGUMENTS
+
+Generate a complete PRP for general feature implementation with thorough research. Ensure context is passed to the AI agent to enable self-validation and iterative refinement. Read the feature file first to understand what needs to be created, how the examples provided help, and any other considerations.
+
+The AI agent only gets the context you append to the PRP and its training data. Assume the AI agent has access to the codebase and a similar knowledge cutoff, so include or reference research findings directly in the PRP. The Agent has web search capabilities—pass URLs to documentation and examples.
+
+## Core PRP Creation Workflow
+
+1. **Read INITIAL.md first** – Parse project context and requirements
+2. **Analyze codebase** – Understand existing patterns and structure
+3. **Generate PRP** – Use Advanced Template v3 with implementation focus
+4. **Validate context** – Ensure all necessary information is included
+5. **Review and refine** – Iterate until PRP is implementation-ready
+
+## Research Process
+
+1. **Codebase Analysis**
+   - Search for similar features/patterns in the codebase
+   - Identify files to reference in the PRP
+   - Note existing conventions to follow
+   - Check test patterns for validation approach
+
+2. **External Research**
+   - Search for similar features/patterns online
+   - Library documentation (include specific URLs)
+   - Implementation examples (GitHub/StackOverflow/blogs)
+   - Best practices and common pitfalls
+
+3. **User Clarification** (if needed)
+   - Specific patterns to mirror and where to find them?
+   - Integration requirements and where to find them?
+
+## PRP Generation
+
+Using `PRPs/templates/prp-base-{tech}.md` as the template:
+
+### Required Sections (ALL must be present)
+
+- **Goal** – Specific, measurable feature goal with deliverable
+- **User Persona** – Target user, use case, user journey, pain points
+- **Why** – Business value, integration benefits, problem solving
+- **What** – User-visible behavior and technical requirements
+- **All Needed Context** – Documentation, references, codebase analysis
+- **Implementation Blueprint** – Data models, tasks, patterns, integration
+- **Validation Loop** – 4-level validation system
+- **Anti-Patterns** – Specific things to avoid
+
+### All Needed Context to include (and pass to the AI agent)
+
+- **Current codebase tree** (run `tree` command)
+- **Desired codebase tree** with file responsibilities
+- **Documentation**: URLs with specific sections
+- **Code Examples**: Real snippets from the codebase
+- **Gotchas**: Library quirks, version issues
+- **Patterns**: Existing approaches to follow with exact file paths
+
+### Implementation Blueprint
+
+- Start with pseudocode showing the approach
+- Reference real files for patterns
+- Include an error handling strategy
+- List tasks to fulfill the PRP in execution order
+
+Task structure standard:
+
+```yaml
+Task N: [ACTION] [file_path]
+  - IMPLEMENT: [Specific implementation details]
+  - FOLLOW pattern: [exact file path and pattern description]
+  - NAMING: [Naming conventions to follow]
+  - DEPENDENCIES: [What must be completed first]
+  - PLACEMENT: [Where in codebase this goes]
+```
+
+Pattern documentation (for each referenced pattern):
+- Exact file path
+- Specific method/class to follow
+- Key implementation details
+- Gotchas and limitations
+- Integration requirements
+
+### Validation Loop (4 Levels)
+
+- **Level 1: Syntax & Style**
+  - Ruff linting and formatting
+  - MyPy type checking
+  - Zero errors before proceeding
+- **Level 2: Unit Tests**
+  - Test each component as created
+  - Follow existing test patterns
+  - Cover all public methods
+- **Level 3: Integration Testing**
+  - Service startup validation
+  - Endpoint testing
+  - Database connectivity
+  - MCP tool validation
+- **Level 4: Creative Validation**
+  - Domain-specific testing
+  - Performance validation
+  - Security scanning
+  - Load testing if applicable
+
+Executable gates (example for Python):
+
+```bash
+# Syntax/Style
+ruff check --fix && mypy .
+
+# Unit Tests
+uv run pytest tests/ -v
+```
+
+**CRITICAL: After researching and exploring the codebase, ULTRATHINK about the PRP and plan your approach BEFORE writing it.**
+
+## Integration with Archon Workflow
+
+When using with Archon CE Template:
+1. Language detection from `INITIAL.md` drives template adaptation
+2. Workflow scripts ensure proper sequence
+3. Advanced template provides implementation precision
+4. Cursor rules enhance IDE integration
+5. Validation loops ensure quality at each step
+
+## Example PRP Structure
+
+```markdown
+## Goal
+**Feature Goal**: Implement user authentication service
+**Deliverable**: FastAPI authentication endpoints with JWT tokens
+**Success Definition**: Users can register, login, and access protected routes
+
+## Implementation Blueprint
+### Implementation Tasks
+Task 1: CREATE src/models/auth_models.py
+  - IMPLEMENT: UserRequest, UserResponse Pydantic models
+  - FOLLOW pattern: src/models/existing_model.py
+  - NAMING: CamelCase classes, snake_case fields
+
+Task 2: CREATE src/services/auth_service.py
+  - IMPLEMENT: AuthService class with async methods
+  - FOLLOW pattern: src/services/database_service.py
+  - DEPENDENCIES: Import models from Task 1
+```
+
+## Error Handling Guidance
+
+If context is incomplete:
+1. Stop generation immediately
+2. Request missing information from the user
+3. Suggest specific additions to `INITIAL.md`
+4. Resume only when context is complete
+
+If patterns are unclear:
+1. Analyze existing codebase for patterns
+2. Document discovered patterns in the PRP
+3. Reference specific files and methods
+4. Include gotchas and limitations
+
+## Output
+
+Save as: `PRPs/{feature-name}.md`
+
+## Success Metrics
+
+The PRP is ready when:
+- All sections are complete and specific
+- Implementation tasks are actionable
+- Pattern references are exact
+- Validation loops are comprehensive
+- Context completeness is verified
+- Anti-patterns are documented
+
+Generated PRP enables:
+- One-pass implementation success
+- Clear development roadmap
+- Comprehensive testing strategy
+- Quality assurance at each step
+- Pattern consistency across the codebase
+
+## Quality Checklist
+
+- [ ] All required sections present
+- [ ] Context completeness validated (current/desired trees, docs, patterns)
+- [ ] Implementation tasks are specific and actionable
+- [ ] Pattern references include exact file paths
+- [ ] Validation loop defined with executable gates
+- [ ] Anti-patterns clearly documented
+- [ ] Error handling strategy documented
+- [ ] Clear implementation path
+
+Score the PRP on a scale of 1–10 (confidence level to succeed in one-pass implementation using Claude Code).
+
+Remember: The goal is one-pass implementation success through comprehensive context.
+

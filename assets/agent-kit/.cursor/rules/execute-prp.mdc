@@ -1,0 +1,237 @@
+---
+alwaysApply: true
+---
+
+# PRP Execution Rules - Implementation and Validation Workflow
+
+## Core Execution Workflow
+
+1. Parse PRP – Read and validate PRP document
+2. Analyze Dependencies – Determine task execution order
+3. Check Prerequisites – Verify environment and dependencies
+4. Execute Tasks – Follow implementation blueprint step-by-step
+5. Validate Results – Run validation loops at each level
+6. Update Progress – Track completion status
+7. Generate Report – Create execution summary
+
+## PRP Parsing Standards
+
+### Required PRP Elements
+Before execution, verify the PRP contains:
+- Complete implementation blueprint
+- Ordered task dependencies
+- Pattern references with exact file paths
+- Validation loop specifications
+- Anti-pattern documentation
+- Success criteria definitions
+
+### Context Validation
+Ensure execution context is complete:
+- All referenced files exist and are accessible
+- Pattern files contain expected structures
+- Dependencies are properly installed
+- Environment variables are configured
+- Database connections are established
+
+## Task Execution Standards
+
+### Task Order Enforcement
+Execute tasks in dependency order:
+1. Data Models (Task 1) – Foundation for all other tasks
+2. Services (Task 2) – Business logic implementation
+3. Tools/APIs (Task 3) – External interface creation
+4. Integration (Task 4) – System-wide connections
+5. Testing (Task 5-6) – Quality assurance
+
+### Implementation Patterns
+For each task, follow these steps:
+1. Read pattern file – Understand the structure to follow
+2. Create new file – Use exact naming and placement
+3. Implement functionality – Follow pattern exactly
+4. Run Level 1 validation – Syntax, style, type checking
+5. Verify integration – Ensure dependencies are satisfied
+6. Document changes – Update any relevant documentation
+
+### File Creation Standards
+When creating new files:
+- Use exact paths specified in PRP
+- Follow naming conventions exactly
+- Implement all required methods/classes
+- Include proper imports and dependencies
+- Add comprehensive error handling
+- Follow existing code style
+
+## Validation Loop Execution
+
+### Level 1: Syntax & Style (Immediate)
+Run after each file creation:
+```bash
+ruff check src/{new_files} --fix
+mypy src/{new_files}
+ruff format src/{new_files}
+```
+Expected: Zero errors. Fix all issues before proceeding.
+
+### Level 2: Unit Tests (Component)
+Test each component as created:
+```bash
+uv run pytest src/services/tests/test_{domain}_service.py -v
+uv run pytest src/tools/tests/test_{action}_{resource}.py -v
+```
+Expected: All tests pass. Debug failures before continuing.
+
+### Level 3: Integration Testing (System)
+Validate system integration:
+```bash
+# Service startup
+uv run python main.py &
+sleep 3
+
+# Health checks
+curl -f http://localhost:8000/health
+
+# Feature endpoints
+curl -X POST http://localhost:8000/{endpoint} -H "Content-Type: application/json" -d '{"test": "data"}'
+```
+Expected: Integrations working, proper responses.
+
+### Level 4: Creative Validation (Domain)
+Run domain-specific tests:
+```bash
+# Performance testing
+ab -n 100 -c 10 http://localhost:8000/{endpoint}
+
+# Security scanning
+bandit -r src
+
+# Load testing
+# wrk -t12 -c400 -d30s http://localhost:8000/{endpoint}
+```
+Expected: All creative validations pass.
+
+## Error Handling During Execution
+
+### Task Failure Recovery
+If a task fails:
+1. Stop execution immediately
+2. Analyze error – Check logs, validation output
+3. Fix root cause – Don’t work around issues
+4. Re-run validation – Ensure fix is complete
+5. Resume execution – Continue from failed task
+
+### Pattern Mismatch Handling
+If pattern doesn’t match expected:
+1. Analyze existing codebase – Understand actual patterns
+2. Update PRP – Document discovered patterns
+3. Adjust implementation – Follow actual patterns
+4. Document changes – Update pattern references
+5. Continue execution – Resume with corrected approach
+
+### Validation Failure Recovery
+If validation fails:
+1. Read error output – Understand what failed
+2. Fix implementation – Address root cause
+3. Re-run validation – Verify fix works
+4. Document lessons – Update PRP if needed
+5. Continue execution – Resume validation loop
+
+## Progress Tracking
+
+### Task Status Updates
+Track each task:
+- [ ] Not Started – Task identified but not begun
+- [x] In Progress – Task actively being worked on
+- [x] Completed – Task finished and validated
+- [x] Blocked – Task waiting for dependency
+- [x] Failed – Task encountered error (document reason)
+
+### Completion Validation
+Task is complete when:
+- All implementation requirements met
+- Level 1 validation passes
+- Dependencies are satisfied
+- Integration points work
+- Documentation is updated
+
+## Quality Assurance
+
+### Code Quality Standards
+Maintain throughout execution:
+- Follow existing naming conventions
+- Use established error handling patterns
+- Maintain consistent code style
+- Include comprehensive logging
+- Add proper type hints
+- Document complex logic
+
+### Testing Standards
+Ensure comprehensive coverage:
+- Unit tests for all public methods
+- Integration tests for workflows
+- Error case testing
+- Performance validation
+- Security verification
+- Edge case coverage
+
+## Integration with Archon Workflow
+When using with Archon CE Template:
+1. Workflow scripts provide execution structure
+2. Advanced template guides implementation
+3. Validation loops ensure quality
+4. Cursor rules enhance IDE experience
+5. Progress tracking maintains visibility
+
+## Success Metrics
+Execution is successful when:
+- All tasks completed successfully
+- All validation levels passed
+- Integration points working
+- Performance requirements met
+- Security requirements satisfied
+- Documentation complete
+
+## Final Validation
+Before marking complete:
+1. Run full test suite – All tests passing
+2. Validate all endpoints – System integration working
+3. Check performance – Meets specified requirements
+4. Verify security – No vulnerabilities introduced
+5. Update documentation – Reflects final implementation
+6. Archive PRP – Mark as completed successfully
+
+## Anti-Patterns During Execution
+Avoid these execution mistakes:
+- Skipping validation steps
+- Working around errors instead of fixing
+- Ignoring failing tests
+- Deviating from established patterns
+- Rushing through implementation
+- Skipping documentation updates
+
+## Recovery Procedures
+If execution goes off track:
+1. Assess current state – What’s working, what’s broken
+2. Identify deviation point – Where execution diverged
+3. Plan recovery – How to get back on track
+4. Execute recovery – Fix issues systematically
+5. Validate recovery – Ensure system is stable
+6. Resume execution – Continue from stable point
+
+## Documentation Requirements
+
+During execution, maintain:
+- Task completion status
+- Validation results
+- Error logs and resolutions
+- Pattern discoveries
+- Integration notes
+- Performance metrics
+
+After completion:
+- Final implementation summary
+- Validation results summary
+- Performance benchmarks
+- Security assessment
+- Deployment notes
+- Maintenance requirements
+

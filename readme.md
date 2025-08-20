@@ -154,6 +154,26 @@ Examples of `{tech}` identifiers this kit supports out‑of‑the‑box (selecte
 
 For multi‑stack projects, the primary `{tech}` is chosen based on the strongest signals in `INITIAL.md` (framework mentions, docs links, and file patterns).
 
+### Detection Signals → Template Mapping
+
+- nextjs: triggered by any of:
+  - Mentions: "Next.js", "App Router", React Server Components
+  - Docs: `nextjs.org/docs`
+  - Files: `app/page.tsx`, route handlers under `app/api/*/route.ts`
+  - Example template: [PRPs/examples/prp-base-nextjs.json](PRPs/examples/prp-base-nextjs.json)
+- fastapi: triggered by any of:
+  - Mentions: "FastAPI", Pydantic
+  - Docs: `fastapi.tiangolo.com`, `docs.pydantic.dev`
+  - Files: `app/main.py`, `app/routers/*.py`
+  - Example template: [PRPs/examples/prp-base-fastapi.json](PRPs/examples/prp-base-fastapi.json)
+- express: triggered by any of:
+  - Mentions: "Express"
+  - Docs: `expressjs.com`
+  - Files/Signals: `src/server.ts`, `src/routes/*.ts`, `package.json` dependency "express"
+  - Example template: [PRPs/examples/prp-base-express.json](PRPs/examples/prp-base-express.json)
+
+> Note: If multiple technologies are detected, signals are scored and the strongest match wins. You can steer detection by clarifying tech and docs in `INITIAL.md`.
+
 ---
 
 ## 📁 Project Notes

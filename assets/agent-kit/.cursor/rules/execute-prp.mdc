@@ -1,56 +1,70 @@
----
-alwaysApply: true
----
 
-# PRP Execution Rules - Implementation and Validation Workflow
+# PRP Execution Rules - Project-Wide Implementation and Validation Workflow
 
 ## Core Execution Workflow
 
-1. Parse PRP – Read and validate PRP document
-2. Analyze Dependencies – Determine task execution order
-3. Check Prerequisites – Verify environment and dependencies
-4. Execute Tasks – Follow implementation blueprint step-by-step
-5. Validate Results – Run validation loops at each level
-6. Update Progress – Track completion status
-7. Generate Report – Create execution summary
+1. **Parse PRP** – Read and validate complete project PRP document
+2. **Analyze Feature Dependencies** – Determine feature and task execution order
+3. **Check Prerequisites** – Verify environment and dependencies for entire project
+4. **Execute Features** – Follow implementation blueprint phase-by-phase, feature-by-feature
+5. **Validate Results** – Run validation loops at each level across all features
+6. **Update Progress** – Track completion status for features and tasks
+7. **Generate Report** – Create comprehensive execution summary
 
 ## PRP Parsing Standards
 
 ### Required PRP Elements
 Before execution, verify the PRP contains:
-- Complete implementation blueprint
-- Ordered task dependencies
-- Pattern references with exact file paths
-- Validation loop specifications
-- Anti-pattern documentation
-- Success criteria definitions
+- **Complete project scope** with all major features defined
+- **Feature-based implementation blueprint** with phases and feature breakdowns
+- **User stories and tasks** for each feature
+- **Cross-feature dependencies** and integration points
+- **Validation specifications** for all levels across entire project
+- **Context completeness** (documentation, gotchas, principles)
+- **Success criteria definitions** for complete system
 
 ### Context Validation
 Ensure execution context is complete:
 - All referenced files exist and are accessible
 - Pattern files contain expected structures
-- Dependencies are properly installed
-- Environment variables are configured
+- Dependencies are properly installed for all features
+- Environment variables are configured for complete system
 - Database connections are established
+- **Feature integration points** are clearly defined
 
-## Task Execution Standards
+## Feature-Based Execution Standards
 
-### Task Order Enforcement
-Execute tasks in dependency order:
-1. Data Models (Task 1) – Foundation for all other tasks
-2. Services (Task 2) – Business logic implementation
-3. Tools/APIs (Task 3) – External interface creation
-4. Integration (Task 4) – System-wide connections
-5. Testing (Task 5-6) – Quality assurance
+### Feature Execution Order
+Execute features in dependency order:
+1. **Foundation Features** (Phase 1) – Core infrastructure, shared components
+2. **Core Business Features** (Phase 2) – Primary functionality, independent features
+3. **Integration Features** (Phase 3) – Cross-feature workflows, system integration
+4. **Quality & Testing** (Phase 4) – End-to-end validation, performance testing
 
-### Implementation Patterns
-For each task, follow these steps:
-1. Read pattern file – Understand the structure to follow
-2. Create new file – Use exact naming and placement
-3. Implement functionality – Follow pattern exactly
-4. Run Level 1 validation – Syntax, style, type checking
-5. Verify integration – Ensure dependencies are satisfied
-6. Document changes – Update any relevant documentation
+### Feature Dependencies
+For each feature, identify:
+- **Prerequisites**: What other features must be completed first
+- **Integration Points**: How it connects to other features
+- **Shared Resources**: What components are used across features
+- **Data Dependencies**: What data flows between features
+
+### Task Execution Within Features
+Execute tasks within each feature:
+1. **Foundation Tasks** – Models, schemas, base classes
+2. **Core Implementation** – Business logic, API endpoints
+3. **Integration Tasks** – Connect with other features
+4. **Testing & Validation** – Feature-specific validation
+
+## Implementation Patterns
+
+### For Each Task, Follow These Steps:
+1. **Read pattern file** – Understand the structure to follow
+2. **Create new file** – Use exact naming and placement
+3. **Implement functionality** – Follow pattern exactly
+4. **Run Level 1 validation** – Syntax, style, type checking
+5. **Verify feature integration** – Ensure dependencies are satisfied
+6. **Document changes** – Update any relevant documentation
+7. **Update Archon task status** – Mark progress in project management
 
 ### File Creation Standards
 When creating new files:
@@ -60,31 +74,47 @@ When creating new files:
 - Include proper imports and dependencies
 - Add comprehensive error handling
 - Follow existing code style
+- **Consider feature integration** – How this file connects to other features
 
 ## Validation Loop Execution
 
 ### Level 1: Syntax & Style (Immediate)
 Run after each file creation:
 ```bash
+# Python
 ruff check src/{new_files} --fix
 mypy src/{new_files}
 ruff format src/{new_files}
+
+# TypeScript/JavaScript
+npm run lint -- --fix
+npm run type-check
+npm run format
+
+# General
+# Ensure no syntax errors, proper formatting, type safety
 ```
 Expected: Zero errors. Fix all issues before proceeding.
 
 ### Level 2: Unit Tests (Component)
 Test each component as created:
 ```bash
-uv run pytest src/services/tests/test_{domain}_service.py -v
-uv run pytest src/tools/tests/test_{action}_{resource}.py -v
+# Python
+uv run pytest tests/ -v --cov=src
+
+# TypeScript/JavaScript
+npm run test -- --coverage
+
+# General
+# Test each component with >80% coverage
 ```
 Expected: All tests pass. Debug failures before continuing.
 
-### Level 3: Integration Testing (System)
-Validate system integration:
+### Level 3: Integration Testing (Feature & System)
+Validate feature integration:
 ```bash
 # Service startup
-uv run python main.py &
+uv run python main.py &  # or npm run dev
 sleep 3
 
 # Health checks
@@ -92,22 +122,37 @@ curl -f http://localhost:8000/health
 
 # Feature endpoints
 curl -X POST http://localhost:8000/{endpoint} -H "Content-Type: application/json" -d '{"test": "data"}'
-```
-Expected: Integrations working, proper responses.
 
-### Level 4: Creative Validation (Domain)
-Run domain-specific tests:
+# Cross-feature integration
+# Test how features work together
+```
+Expected: Integrations working, proper responses, features communicating.
+
+### Level 4: Creative Validation (Project-Wide)
+Run domain-specific tests across all features:
 ```bash
 # Performance testing
 ab -n 100 -c 10 http://localhost:8000/{endpoint}
 
 # Security scanning
-bandit -r src
+bandit -r src  # or npm audit, security scanning tools
 
 # Load testing
 # wrk -t12 -c400 -d30s http://localhost:8000/{endpoint}
+
+# End-to-end workflows
+# Test complete user journeys across multiple features
 ```
-Expected: All creative validations pass.
+Expected: All creative validations pass, complete system working.
+
+### Final Checklist Validation
+After all levels pass, run the final checklist:
+- **All features implemented** and integrated
+- **All validation gates passed** across entire system
+- **Cross-feature workflows** functional
+- **Performance requirements met** for complete system
+- **Security requirements satisfied** across all features
+- **Documentation complete** for entire project
 
 ## Error Handling During Execution
 
@@ -115,12 +160,21 @@ Expected: All creative validations pass.
 If a task fails:
 1. Stop execution immediately
 2. Analyze error – Check logs, validation output
-3. Fix root cause – Don’t work around issues
+3. Fix root cause – Don't work around issues
 4. Re-run validation – Ensure fix is complete
 5. Resume execution – Continue from failed task
 
+### Feature Integration Issues
+If features don't integrate properly:
+1. **Analyze integration points** – Check how features connect
+2. **Review dependencies** – Ensure proper order of execution
+3. **Check shared resources** – Verify common components work
+4. **Update PRP** – Document discovered integration patterns
+5. **Fix integration** – Address cross-feature issues
+6. **Continue execution** – Resume with corrected approach
+
 ### Pattern Mismatch Handling
-If pattern doesn’t match expected:
+If pattern doesn't match expected:
 1. Analyze existing codebase – Understand actual patterns
 2. Update PRP – Document discovered patterns
 3. Adjust implementation – Follow actual patterns
@@ -137,20 +191,28 @@ If validation fails:
 
 ## Progress Tracking
 
+### Feature Status Updates
+Track each feature:
+- [ ] **Not Started** – Feature identified but not begun
+- [x] **In Progress** – Feature actively being worked on
+- [x] **Completed** – Feature finished and validated
+- [x] **Blocked** – Feature waiting for dependency
+- [x] **Failed** – Feature encountered error (document reason)
+
 ### Task Status Updates
-Track each task:
-- [ ] Not Started – Task identified but not begun
-- [x] In Progress – Task actively being worked on
-- [x] Completed – Task finished and validated
-- [x] Blocked – Task waiting for dependency
-- [x] Failed – Task encountered error (document reason)
+Track each task within features:
+- [ ] **Not Started** – Task identified but not begun
+- [x] **In Progress** – Task actively being worked on
+- [x] **Completed** – Task finished and validated
+- [x] **Blocked** – Task waiting for dependency
+- [x] **Failed** – Task encountered error (document reason)
 
 ### Completion Validation
-Task is complete when:
-- All implementation requirements met
-- Level 1 validation passes
+Feature is complete when:
+- All tasks within the feature are completed
+- All validation levels pass for the feature
 - Dependencies are satisfied
-- Integration points work
+- Integration points with other features work
 - Documentation is updated
 
 ## Quality Assurance
@@ -159,79 +221,145 @@ Task is complete when:
 Maintain throughout execution:
 - Follow existing naming conventions
 - Use established error handling patterns
-- Maintain consistent code style
+- Maintain consistent code style across all features
 - Include comprehensive logging
 - Add proper type hints
 - Document complex logic
+- **Ensure feature consistency** – Similar patterns across features
 
 ### Testing Standards
 Ensure comprehensive coverage:
-- Unit tests for all public methods
-- Integration tests for workflows
+- Unit tests for all public methods across all features
+- Integration tests for workflows within features
+- Cross-feature integration tests
 - Error case testing
-- Performance validation
-- Security verification
+- Performance validation for complete system
+- Security verification across all features
 - Edge case coverage
 
 ## Integration with Archon Workflow
 When using with Archon CE Template:
-1. Workflow scripts provide execution structure
-2. Advanced template guides implementation
-3. Validation loops ensure quality
-4. Cursor rules enhance IDE experience
-5. Progress tracking maintains visibility
+1. **Feature-based task management** – Group tasks by feature field
+2. **Progress tracking** – Update task status in Archon as features complete
+3. **Dependency management** – Use task order to show execution sequence
+4. **Validation integration** – Document validation results in task descriptions
+5. **Cross-feature visibility** – See how features connect in Archon UI
+
+### Archon Task Updates
+During execution, update Archon tasks:
+```bash
+# Mark task as in progress
+archon:manage_task(
+  action="update",
+  task_id="...",
+  update_fields={"status": "doing"}
+)
+
+# Mark task as complete
+archon:manage_task(
+  action="update",
+  task_id="...",
+  update_fields={"status": "done"}
+)
+
+# Update task description with progress
+archon:manage_task(
+  action="update",
+  task_id="...",
+  update_fields={"description": "Updated description with progress"}
+)
+```
 
 ## Success Metrics
 Execution is successful when:
-- All tasks completed successfully
-- All validation levels passed
-- Integration points working
-- Performance requirements met
-- Security requirements satisfied
-- Documentation complete
+- **All features completed** successfully
+- **All validation levels passed** across entire system
+- **Integration points working** between features
+- **Performance requirements met** for complete system
+- **Security requirements satisfied** across all features
+- **Documentation complete** for entire project
+- **Cross-feature workflows functional**
 
 ## Final Validation
 Before marking complete:
-1. Run full test suite – All tests passing
-2. Validate all endpoints – System integration working
-3. Check performance – Meets specified requirements
-4. Verify security – No vulnerabilities introduced
-5. Update documentation – Reflects final implementation
-6. Archive PRP – Mark as completed successfully
+1. **Run full test suite** – All tests passing across all features
+2. **Validate all endpoints** – System integration working across features
+3. **Check performance** – Meets specified requirements for complete system
+4. **Verify security** – No vulnerabilities introduced across features
+5. **Test cross-feature workflows** – End-to-end user journeys functional
+6. **Update documentation** – Reflects final implementation of all features
+7. **Archive PRP** – Mark as completed successfully
 
 ## Anti-Patterns During Execution
 Avoid these execution mistakes:
-- Skipping validation steps
-- Working around errors instead of fixing
-- Ignoring failing tests
-- Deviating from established patterns
-- Rushing through implementation
-- Skipping documentation updates
+- **Skipping validation steps** – Each level is critical
+- **Working around errors** instead of fixing root causes
+- **Ignoring failing tests** – Fix before proceeding
+- **Deviating from established patterns** – Maintain consistency
+- **Rushing through implementation** – Quality over speed
+- **Skipping documentation updates** – Keep it current
+- **Ignoring feature integration** – Test how features work together
+- **Skipping cross-feature validation** – Ensure system cohesion
 
 ## Recovery Procedures
 If execution goes off track:
-1. Assess current state – What’s working, what’s broken
-2. Identify deviation point – Where execution diverged
-3. Plan recovery – How to get back on track
-4. Execute recovery – Fix issues systematically
-5. Validate recovery – Ensure system is stable
-6. Resume execution – Continue from stable point
+1. **Assess current state** – What's working, what's broken across features
+2. **Identify deviation point** – Where execution diverged
+3. **Plan recovery** – How to get back on track
+4. **Execute recovery** – Fix issues systematically
+5. **Validate recovery** – Ensure system is stable across all features
+6. **Resume execution** – Continue from stable point
 
 ## Documentation Requirements
 
 During execution, maintain:
-- Task completion status
-- Validation results
-- Error logs and resolutions
-- Pattern discoveries
-- Integration notes
-- Performance metrics
+- **Feature completion status** and progress
+- **Task completion status** within features
+- **Validation results** for each level
+- **Error logs and resolutions**
+- **Pattern discoveries** and updates
+- **Integration notes** between features
+- **Performance metrics** across system
+- **Cross-feature dependency tracking**
 
 After completion:
-- Final implementation summary
-- Validation results summary
-- Performance benchmarks
+- **Final implementation summary** for all features
+- **Validation results summary** across entire system
+- **Performance benchmarks** for complete system
+- **Security assessment** across all features
+- **Deployment notes** for complete system
+- **Maintenance requirements** for all features
+- **Feature integration guide** for future development
+
+## Project-Wide Execution Checklist
+
+Before starting execution:
+- [ ] **Complete PRP parsed** and validated
+- [ ] **All features identified** with clear scope
+- [ ] **Dependencies mapped** between features
+- [ ] **Execution order determined** for features and tasks
+- [ ] **Environment prepared** for all planned technologies
+- [ ] **Archon project created** and tasks loaded
+- [ ] **Validation strategy defined** for each level
+
+During execution:
+- [ ] **Features executed** in dependency order
+- [ ] **Tasks completed** within each feature
+- [ ] **Validation run** at each level
+- [ ] **Progress tracked** in Archon
+- [ ] **Integration tested** between features
+- [ ] **Issues documented** and resolved
+
+After completion:
+- [ ] **All features functional** and integrated
+- [ ] **All validation levels passed**
+- [ ] **Cross-feature workflows tested**
+- [ ] **Performance requirements met**
+- [ ] **Security requirements satisfied**
+- [ ] **Documentation complete**
+- [ ] **Archon tasks updated** to reflect completion
+
+This execution workflow ensures successful implementation of complete projects with multiple features, proper integration, and comprehensive validation across the entire system.
 - Security assessment
 - Deployment notes
 - Maintenance requirements
-

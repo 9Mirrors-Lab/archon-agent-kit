@@ -1,0 +1,212 @@
+{
+  "document_type": "prp",
+  "title": "Project Implementation PRP",
+  "version": "1.0",
+  "author": "prp-creator",
+  "date": "${YYYY-MM-DD}",
+  "status": "draft",
+  
+  "goal": "Implement complete project with all planned features and capabilities",
+  
+  "why": [
+    "Business value of the entire project",
+    "Integration benefits across all features",
+    "Strategic importance of complete system",
+    "Reduce regressions via explicit validation loops"
+  ],
+  
+  "what": {
+    "description": "Complete project scope with all planned features and capabilities",
+    "success_criteria": [
+      "All planned features implemented and integrated",
+      "End-to-end workflows functional across features",
+      "Performance and security requirements met for entire system",
+      "All validation gates pass successfully"
+    ],
+    "user_stories": [
+      "As a [user type], I want to [action] so that [benefit]",
+      "As a [user type], I need to [requirement] in order to [goal]"
+    ]
+  },
+  
+  "context": {
+    "documentation": [
+      {
+        "source": "https://docs.example.com/api",
+        "why": "API endpoints and data models needed"
+      },
+      {
+        "source": "src/components/Example.tsx",
+        "why": "Existing pattern to follow for UI components"
+      }
+    ],
+    "existing_code": [
+      {
+        "file": "src/services/baseService.ts",
+        "purpose": "Service layer pattern to extend"
+      }
+    ],
+    "gotchas": [
+      "Critical requirement or constraint to remember",
+      "Common mistake to avoid during implementation",
+      "Avoid unvalidated input; always validate on server",
+      "Do not put secrets in client bundles",
+      "No blocking data fetch in large client components",
+      "Authentication must be implemented before protected features",
+      "Database migrations must handle all planned tables",
+      "Frontend components must follow consistent design patterns"
+    ],
+    "principles": [
+      "Context is King: Include ALL necessary documentation and examples",
+      "Validation Loops: Provide executable tests the AI can run and fix",
+      "Information Dense: Use keywords and patterns from the codebase",
+      "Progressive Success: Start simple, validate, then enhance",
+      "Feature Integration: Plan how features work together",
+      "Dependency Management: Clear understanding of build order"
+    ],
+    "current_tree": ".\n├── src/\n│   ├── components/\n│   ├── services/\n│   └── api/\n├── tests/\n└── docs/",
+    "desired_tree": ".\n├── src/\n│   ├── components/\n│   │   ├── Feature1/\n│   │   ├── Feature2/\n│   │   └── Feature3/\n│   ├── services/\n│   │   ├── feature1Service.ts\n│   │   ├── feature2Service.ts\n│   │   └── feature3Service.ts\n│   ├── api/\n│   │   ├── feature1/\n│   │   ├── feature2/\n│   │   └── feature3/\n│   └── types/\n│       ├── feature1.ts\n│       ├── feature2.ts\n│       └── feature3.ts\n├── tests/\n│   ├── feature1.test.ts\n│   ├── feature2.test.ts\n│   └── feature3.test.ts\n└── docs/\n    ├── feature1.md\n    ├── feature2.md\n    └── feature3.md",
+    "dependencies": [
+      "Package or service that must be available",
+      "Another feature that must be completed first"
+    ],
+    "environment_variables": [
+      "API_KEY",
+      "DATABASE_URL",
+      "FEATURE_FLAG_ENABLED"
+    ],
+    "config_notes": [
+      "Use .env.local; never commit secrets",
+      "Feature flags for gradual rollout"
+    ]
+  },
+  
+  "implementation_blueprint": {
+    "phase_1_foundation": {
+      "description": "Core infrastructure and shared components",
+      "duration": "1-2 weeks",
+      "features": [
+        {
+          "name": "Core Infrastructure",
+          "epic_description": "Foundation that all other features build upon",
+          "user_stories": [
+            "US-001: System setup and configuration",
+            "US-002: Database schema and models",
+            "US-003: Authentication and authorization"
+          ],
+          "tasks": [
+            {
+              "title": "Core Infrastructure: Set up project structure",
+              "feature": "Core Infrastructure",
+              "details": "Create base project structure with shared components",
+              "files": ["src/config/", "src/utils/", "src/types/base.ts"]
+            },
+            {
+              "title": "Core Infrastructure: Database setup",
+              "feature": "Core Infrastructure", 
+              "details": "Initialize database with core schemas",
+              "files": ["migrations/001_initial_schema.sql", "src/models/base.py"]
+            }
+          ]
+        }
+      ]
+    },
+    "phase_2_core_features": {
+      "description": "Primary business functionality",
+      "duration": "2-3 weeks",
+      "features": [
+        {
+          "name": "Feature 1",
+          "epic_description": "Primary business feature description",
+          "user_stories": [
+            "US-004: Core functionality user story",
+            "US-005: Advanced functionality user story"
+          ],
+          "tasks": [
+            {
+              "title": "Feature 1: Implement core functionality",
+              "feature": "Feature 1",
+              "details": "Build primary business logic and API endpoints",
+              "files": ["src/services/feature1Service.ts", "src/api/feature1/"]
+            }
+          ]
+        },
+        {
+          "name": "Feature 2",
+          "epic_description": "Secondary business feature description",
+          "user_stories": [
+            "US-006: Secondary functionality user story"
+          ],
+          "tasks": [
+            {
+              "title": "Feature 2: Implement secondary functionality",
+              "feature": "Feature 2",
+              "details": "Build secondary business logic and integration",
+              "files": ["src/services/feature2Service.ts", "src/api/feature2/"]
+            }
+          ]
+        }
+      ]
+    },
+    "phase_3_integration": {
+      "description": "Feature integration and end-to-end workflows",
+      "duration": "1-2 weeks",
+      "features": [
+        {
+          "name": "System Integration",
+          "epic_description": "Connect all features into cohesive system",
+          "user_stories": [
+            "US-007: Cross-feature workflow",
+            "US-008: System-wide validation"
+          ],
+          "tasks": [
+            {
+              "title": "System Integration: Connect features",
+              "feature": "System Integration",
+              "details": "Implement cross-feature communication and workflows",
+              "files": ["src/services/integrationService.ts", "src/workflows/"]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  
+  "validation": {
+    "level_1_syntax": [
+      "npm run lint -- --fix",
+      "npm run typecheck",
+      "Ensure no TypeScript errors",
+      "ruff check src/ --fix",
+      "mypy src/"
+    ],
+    "level_2_unit_tests": [
+      "npm run test -- --coverage",
+      "Verify all unit tests pass with >80% coverage",
+      "uv run pytest tests/ -v --cov=src"
+    ],
+    "level_3_integration": [
+      "npm run test:integration",
+      "Test API endpoints with proper data flow",
+      "uv run pytest tests/integration/ -v"
+    ],
+    "level_4_end_to_end": [
+      "Start development server and test user flows",
+      "Verify feature works as expected in browser",
+      "Test error scenarios and edge cases",
+      "uv run pytest tests/e2e/ -v"
+    ],
+    "final_checklist": [
+      "All lint/type checks pass",
+      "Critical user flows tested E2E",
+      "Empty states and error states handled",
+      "Performance benchmarks met",
+      "Security considerations addressed",
+      "All features integrated and working together"
+    ],
+    "summary": {
+      "confidence_score": "8/10",
+      "notes": "High confidence with comprehensive validation gates, clear implementation phases, and feature integration planning"
+    }
+  }
+}

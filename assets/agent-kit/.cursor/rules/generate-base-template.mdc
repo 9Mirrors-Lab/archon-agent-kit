@@ -1,18 +1,15 @@
----
-alwaysApply: false
----
 # Generate Base PRP Template Rule
 
 ## Purpose
 
-This rule generates technology-specific base PRP templates (`prp-base-{tech}.json`) from `INITIAL.md` files. It creates the foundational schema that Archon MCP will use to generate feature-specific PRPs.
+This rule generates technology-specific base PRP templates (`prp-base-{tech}.json`) from `INITIAL.md` files. It loads the canonical template and overlays tech-specific content for **project-wide implementation**.
 
 ## Core Workflow
 
 **Input**: `PRPs/INITIAL.md` with project context (+ Project Name)
 **Output (Local)**: `PRPs/templates/prp-base-{tech}.json` (technology-specific base PRP as JSON)
-**Output (Archon)**: New PRP document stored via Archon MCP with `document_type="prp"`
-**Method**: Dynamic technology detection + universal + Archon-specific layers, serialized as PRP JSON
+**Method**: Load canonical template + overlay tech-specific content + write local JSON file
+**Note**: This rule does NOT create Archon documents - it only generates local base templates
 
 ## Technology Detection Logic
 
@@ -66,6 +63,7 @@ This rule generates technology-specific base PRP templates (`prp-base-{tech}.jso
 - [ ] Database connectivity
 - [ ] MCP tool validation
 - [ ] Cross-component communication
+- [ ] Feature integration testing
 
 ### Level 4: Creative Validation
 - [ ] Domain-specific testing
@@ -73,6 +71,7 @@ This rule generates technology-specific base PRP templates (`prp-base-{tech}.jso
 - [ ] Security scanning
 - [ ] Load testing if applicable
 - [ ] User experience validation
+- [ ] End-to-end workflow validation
 ```
 
 #### Patterns and Gotchas
@@ -119,7 +118,7 @@ This rule generates technology-specific base PRP templates (`prp-base-{tech}.jso
 
 ### Target State
 ```
-[Desired file tree with new files highlighted]
+[Desired file tree with all planned features and files highlighted]
 ```
 
 ### File Naming Conventions
@@ -144,6 +143,7 @@ This rule generates technology-specific base PRP templates (`prp-base-{tech}.jso
 - [Database connection pattern]
 - [External service integration]
 - [Error handling approach]
+- [Feature integration patterns]
 ```
 
 ## Implementation Steps
@@ -165,145 +165,304 @@ archon:perform_rag_query(query="technology frameworks tools", source="INITIAL.md
 archon:search_code_examples(query="file structure patterns", source="INITIAL.md")
 ```
 
-### Step 2: Detect Technology Stack
+### Step 2: Load Canonical Template
+```bash
+# Load the base template from assets/agent-kit/PRP-template/prp.template.json
+# This provides the complete schema structure with project-wide support
+```
+
+### Step 3: Detect Technology Stack
 ```bash
 # Analyze content for technology indicators
 # Extract framework mentions, documentation URLs, file patterns
-# Determine primary and secondary technologies
+# Determine primary technology for template naming
 ```
 
-### Step 3: Generate Universal Layer
+### Step 4: Overlay Tech-Specific Content
 ```bash
-# Always include 4-level validation loop
-# Always include patterns and gotchas section
-# Always include anti-patterns section
+# Update these sections with tech-specific content:
+# - goal: Tailored to detected technology for complete project
+# - why: Technology-specific benefits for entire system
+# - what.description: Complete project scope for the technology
+# - what.success_criteria: Tech-appropriate metrics for all features
+# - what.user_stories: Technology-specific user scenarios across features
+# - context.documentation: Official docs for all planned technologies
+# - context.gotchas: Common pitfalls for the technology stack
+# - context.dependencies: All required packages and services
+# - context.environment_variables: Tech-specific env vars for complete system
+# - implementation_blueprint: Technology-appropriate phases with feature breakdown
+# - validation: Tech-specific lint/test/validation commands for entire project
 ```
 
-### Step 4: Generate Archon-Specific Layer
+### Step 5: Save Local Template
 ```bash
-# Create project structure templates
-# Define file naming conventions
-# Specify file placement rules
-# Document codebase-specific gotchas
+# Write to: PRPs/templates/prp-base-{detected_tech}.json
+# Do NOT upload to Archon - this is just a local template
 ```
 
-### Step 5: Save PRP Base Template (JSON)
-```bash
-# 1) Write local JSON file
-#    Path: PRPs/templates/prp-base-{detected_tech}.json
+## Tech-Specific Content Overlays
 
-# 2) Save to Archon MCP as a PRP document
-archon:manage_document(
-  action="create",
-  project_id="{project_id}",
-  document_type="prp",            # PRP documents must use "prp"
-  title="prp-base-{detected_tech}",
-  content={generated_prp_json}     # Structured JSON (see schema below)
-)
-```
-
-## PRP JSON Schema (Must Match Exactly)
-
-The generated base template MUST be structured JSON compatible with PRPViewer and MUST follow this exact field order:
-
-Order: document_type, title, version, author, date, status, purpose, core_principles, goal, why, what, context, implementation_blueprint, validation, additional_context
-
+### Next.js Overlay (Project-Wide)
 ```json
 {
-  "document_type": "prp",
-  "title": "Base Template - {DetectedTech}",
-  "version": "1.0",
-  "author": "prp-creator",
-  "date": "{ISO-YYYY-MM-DD}",
-  "status": "draft",
-
-  "purpose": "{1-2 sentences explaining the intent of this base template for {DetectedTech}}",
-
-  "core_principles": [
-    "Meta-Context Engineering",
-    "Technology Specialization",
-    "Complete Package Generation",
-    "Validation-Driven",
-    "Usability First"
-  ],
-
-  "goal": "{High-level implementation goal tailored to {DetectedTech}}",
-
+  "goal": "Build complete Next.js application with all planned features using App Router, typed APIs, and secure defaults across the entire system.",
   "why": [
-    "{Business value}",
-    "{Integration benefit}",
-    "{Problem being solved}"
+    "Leverage React Server Components for performance and simplicity across all features",
+    "Standardize data fetching and validation across all pages and routes",
+    "Ensure secure, scalable defaults aligned with Vercel/Next best practices",
+    "Enable feature integration through consistent patterns and shared components"
   ],
-
-  "what": {
-    "description": "{Scope of what this base template targets for {DetectedTech}}",
-    "success_criteria": [
-      "{Measurable success criterion 1}",
-      "{Measurable success criterion 2}"
-    ],
-    "user_stories": [
-      "{As a <role>, I want <capability> so that <benefit>}"
-    ]
-  },
-
   "context": {
     "documentation": [
-      {"source": "{Doc URL 1}", "why": "{Relevance}"},
-      {"source": "{Doc URL 2}", "why": "{Relevance}"}
-    ],
-    "existing_code": [
-      {"file": "{example/path/or/pattern}", "purpose": "{What it shows}"}
+      {"source": "https://nextjs.org/docs", "why": "Core framework guidance for all features"},
+      {"source": "https://zod.dev/", "why": "Schema validation across the application"},
+      {"source": "https://tailwindcss.com/docs", "why": "Consistent styling across all components"}
     ],
     "gotchas": [
-      "{Known pitfall 1}",
-      "{Known pitfall 2}"
+      "Use 'use client' only when necessary - affects all features",
+      "Avoid dynamic rendering where static/ISR suffices",
+      "Validate request data at the edge of route handlers with zod",
+      "Shared state management affects all features - plan carefully",
+      "Component library consistency across all features"
     ],
-    "current_state": "{Summary of current system from INITIAL.md}",
-    "dependencies": [
-      "{Lib/Tool 1}", "{Lib/Tool 2}"
-    ],
-    "environment_variables": [
-      "{ENV_1}", "{ENV_2}"
-    ]
+    "dependencies": ["next", "react", "react-dom", "zod", "@tanstack/react-query", "tailwindcss"],
+    "environment_variables": ["NEXT_PUBLIC_API_URL", "NODE_ENV", "NEXT_PUBLIC_FEATURE_FLAGS"]
   },
-
   "implementation_blueprint": {
-    "phase_1": {
-      "description": "{Foundational setup for {DetectedTech}}",
-      "tasks": [
-        {"title": "{Task 1}", "files": ["{path/example}"], "details": "{What to implement}"}
+    "phase_1_foundation": {
+      "description": "Core Next.js infrastructure and shared components",
+      "features": [
+        {
+          "name": "Core Infrastructure",
+          "epic_description": "Foundation that all other features build upon",
+          "user_stories": ["US-001: Project setup", "US-002: Shared components", "US-003: Base layouts"],
+          "tasks": [
+            {
+              "title": "Core Infrastructure: Set up Next.js project structure",
+              "feature": "Core Infrastructure",
+              "details": "Initialize Next.js with App Router and shared components",
+              "files": ["src/app/layout.tsx", "src/components/ui/", "src/lib/utils.ts"]
+            }
+          ]
+        }
       ]
     },
-    "phase_2": {
-      "description": "{Next layer of functionality}",
-      "tasks": [
-        {"title": "{Task 2}", "files": ["{path/example}"], "details": "{What to implement}"}
+    "phase_2_core_features": {
+      "description": "Primary business functionality",
+      "features": [
+        {
+          "name": "Feature 1",
+          "epic_description": "Primary business feature with Next.js patterns",
+          "user_stories": ["US-004: Core functionality", "US-005: Advanced functionality"],
+          "tasks": [
+            {
+              "title": "Feature 1: Implement with Next.js patterns",
+              "feature": "Feature 1",
+              "details": "Build feature using App Router, Server Components, and shared patterns",
+              "files": ["src/app/feature1/", "src/components/feature1/", "src/lib/feature1.ts"]
+            }
+          ]
+        }
       ]
     }
   },
-
   "validation": {
-    "level_1_syntax": ["{lint/type-check commands}"],
-    "level_2_unit_tests": ["{unit test commands}"],
-    "level_3_integration": ["{integration test commands}"],
-    "level_4_end_to_end": ["{creative/end-to-end validation steps}"]
-  },
-
-  "additional_context": {
-    "security_considerations": [
-      "{Security guidance relevant to {DetectedTech}}"
-    ],
-    "testing_strategies": [
-      "{How to mock, what to test}"
-    ],
-    "monitoring_and_logging": [
-      "{What to monitor, key metrics}"
-    ]
+    "level_1_syntax": ["pnpm lint", "pnpm type-check", "pnpm format"],
+    "level_2_unit_tests": ["pnpm test", "pnpm test:coverage"],
+    "level_3_integration": ["pnpm next build && pnpm next start -p 4000", "pnpm test:integration"],
+    "level_4_end_to_end": ["Lighthouse pass >= 90", "Basic security headers present", "Feature integration tests pass"]
   }
 }
 ```
 
-Notes:
-- Populate fields from INITIAL.md and detected technology (docs, examples, gotchas, deps, env vars).
-- Keep content high-signal; this is a base template blueprint, not a feature PRP.
+### FastAPI Overlay (Project-Wide)
+```json
+{
+  "goal": "Deliver complete FastAPI system with all planned features, typed models, modular routers, and resilient HTTP clients across the entire application.",
+  "why": [
+    "Fast developer feedback loops with Python typing and Pydantic across all features",
+    "Clear separation of routers, services, and schemas for maintainable codebase",
+    "First-class async support for performance across all endpoints",
+    "Consistent patterns enable feature integration and system-wide validation"
+  ],
+  "context": {
+    "documentation": [
+      {"source": "https://fastapi.tiangolo.com/", "why": "Framework docs for all API features"},
+      {"source": "https://docs.pydantic.dev/", "why": "Data validation across all models"},
+      {"source": "https://docs.sqlalchemy.org/", "why": "Database patterns for all features"}
+    ],
+    "gotchas": [
+      "Use async def for I/O-bound endpoints across all features",
+      "Close HTTP clients (httpx.AsyncClient) properly",
+      "Return JSON-serializable models only",
+      "Database session management affects all features",
+      "Shared middleware and dependencies impact entire system"
+    ],
+    "dependencies": ["fastapi", "uvicorn[standard]", "pydantic", "httpx", "pytest", "pytest-asyncio", "sqlalchemy"],
+    "environment_variables": ["PORT", "DATABASE_URL", "ENV", "API_KEYS", "FEATURE_FLAGS"]
+  },
+  "implementation_blueprint": {
+    "phase_1_foundation": {
+      "description": "Core FastAPI infrastructure and shared components",
+      "features": [
+        {
+          "name": "Core Infrastructure",
+          "epic_description": "Foundation that all other features build upon",
+          "user_stories": ["US-001: FastAPI setup", "US-002: Database models", "US-003: Authentication"],
+          "tasks": [
+            {
+              "title": "Core Infrastructure: Set up FastAPI project structure",
+              "feature": "Core Infrastructure",
+              "details": "Initialize FastAPI with shared middleware, models, and database setup",
+              "files": ["src/main.py", "src/models/base.py", "src/database/", "src/middleware/"]
+            }
+          ]
+        }
+      ]
+    },
+    "phase_2_core_features": {
+      "description": "Primary business functionality",
+      "features": [
+        {
+          "name": "Feature 1",
+          "epic_description": "Primary business feature with FastAPI patterns",
+          "user_stories": ["US-004: Core functionality", "US-005: Advanced functionality"],
+          "tasks": [
+            {
+              "title": "Feature 1: Implement with FastAPI patterns",
+              "feature": "Feature 1",
+              "details": "Build feature using routers, services, and shared patterns",
+              "files": ["src/api/feature1/", "src/services/feature1_service.py", "src/models/feature1.py"]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "validation": {
+    "level_1_syntax": ["ruff check .", "mypy .", "ruff format ."],
+    "level_2_unit_tests": ["pytest -q", "pytest --cov=src"],
+    "level_3_integration": ["uvicorn app.main:app --port 8000 & sleep 2 && curl -f http://localhost:8000/healthz"],
+    "level_4_end_to_end": ["ab or hey load test all endpoints", "security scan dependencies", "Feature integration tests"]
+  }
+}
+```
 
+### Express Overlay (Project-Wide)
+```json
+{
+  "goal": "Build complete Express.js system with all planned features, secure middleware, zod-validated routes, and modern logging across the entire application.",
+  "why": [
+    "Fast baseline API with wide ecosystem support for all features",
+    "Explicit validation and error mapping for reliability across the system",
+    "Security headers and sane defaults from day one for all endpoints",
+    "Consistent patterns enable feature integration and maintainable codebase"
+  ],
+  "context": {
+    "documentation": [
+      {"source": "https://expressjs.com/", "why": "Framework docs for all API features"},
+      {"source": "https://github.com/colinhacks/zod", "why": "Validation across all routes"},
+      {"source": "https://www.prisma.io/docs", "why": "Database patterns for all features"}
+    ],
+    "gotchas": [
+      "Order of middleware matters (security first) - affects all routes",
+      "Never trust req.body without validation",
+      "Return consistent error shape across all endpoints",
+      "Shared middleware impacts entire system",
+      "Database connection management affects all features"
+    ],
+    "dependencies": ["express", "zod", "helmet", "cors", "pino", "pino-http", "prisma", "jest"],
+    "environment_variables": ["PORT", "NODE_ENV", "DATABASE_URL", "API_KEYS", "FEATURE_FLAGS"]
+  },
+  "implementation_blueprint": {
+    "phase_1_foundation": {
+      "description": "Core Express.js infrastructure and shared components",
+      "features": [
+        {
+          "name": "Core Infrastructure",
+          "epic_description": "Foundation that all other features build upon",
+          "user_stories": ["US-001: Express setup", "US-002: Database models", "US-003: Authentication"],
+          "tasks": [
+            {
+              "title": "Core Infrastructure: Set up Express.js project structure",
+              "feature": "Core Infrastructure",
+              "details": "Initialize Express with shared middleware, models, and database setup",
+              "files": ["src/server.js", "src/models/", "src/middleware/", "src/config/"]
+            }
+          ]
+        }
+      ]
+    },
+    "phase_2_core_features": {
+      "description": "Primary business functionality",
+      "features": [
+        {
+          "name": "Feature 1",
+          "epic_description": "Primary business feature with Express patterns",
+          "user_stories": ["US-004: Core functionality", "US-005: Advanced functionality"],
+          "tasks": [
+            {
+              "title": "Feature 1: Implement with Express patterns",
+              "feature": "Feature 1",
+              "details": "Build feature using routers, services, and shared patterns",
+              "files": ["src/routes/feature1/", "src/services/feature1Service.js", "src/models/feature1.js"]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "validation": {
+    "level_1_syntax": ["npm run lint", "npm run type-check", "npm run format"],
+    "level_2_unit_tests": ["npm test", "npm run test:coverage"],
+    "level_3_integration": ["node dist/server.js & sleep 2 && curl -f http://localhost:${PORT:-3000}/health"],
+    "level_4_end_to_end": ["k6 or artillery load test all endpoints", "security header scan", "Feature integration tests"]
+  }
+}
+```
+
+## MCP Upload Format
+
+When ready to upload the generated base template to Archon, use this format:
+
+```json
+{
+  "tool": "manage_document",
+  "args": {
+    "action": "add",
+    "project_id": "<PROJECT_ID>",
+    "document_type": "prp",
+    "title": "Base Template - {DetectedTech}",
+    "content": {
+      // The complete generated prp-base-{tech}.json content goes here
+      "document_type": "prp",
+      "title": "Base Template - {DetectedTech}",
+      "version": "1.0",
+      "author": "prp-creator",
+      "date": "2025-08-20",
+      "status": "draft",
+      "goal": "...",
+      "why": [...],
+      "what": {...},
+      "context": {...},
+      "implementation_blueprint": {...},
+      "validation": {...}
+    },
+    "metadata": { "author": "prp-creator", "tags": ["base-template", "prp"] }
+  }
+}
+```
+
+
+## Notes
+
+- The canonical template provides the complete schema structure with project-wide support
+- Only overlay tech-specific content in the allowed sections
+- Keep the template as pure JSON (no markdown code blocks)
+- This generates local templates only - no Archon integration at this stage
+- For Archon upload, use the MCP format above
+- **Project-wide approach**: All tech overlays now include feature-based implementation blueprints
+- **Feature integration**: Tech overlays emphasize how features work together within the technology stack
+- Keep the template as pure JSON (no markdown code blocks)
+- This generates local templates only - no Archon integration at this stage
+- For Archon upload, use the MCP format above

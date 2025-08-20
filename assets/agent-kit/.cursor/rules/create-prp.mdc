@@ -1,151 +1,224 @@
----
-alwaysApply: true
----
 
-# Create PRP (Advanced Implementation Focus)
+# Create Project-Wide PRP (Comprehensive Project Planning)
 
-## Feature file: $ARGUMENTS
+## Project file: $ARGUMENTS
 
-Generate a complete PRP for general feature implementation with thorough research. Ensure context is passed to the AI agent to enable self-validation and iterative refinement. Read the feature file first to understand what needs to be created, how the examples provided help, and any other considerations.
+Generate a complete **project-wide PRP** that defines the entire project scope with multiple features, user stories, and implementation tasks. This creates a comprehensive project roadmap rather than a single-feature specification.
 
 The AI agent only gets the context you append to the PRP and its training data. Assume the AI agent has access to the codebase and a similar knowledge cutoff, so include or reference research findings directly in the PRP. The Agent has web search capabilities—pass URLs to documentation and examples.
 
 ## Core PRP Creation Workflow
 
-1. **Read INITIAL.md first** – Parse project context and requirements
-2. **Analyze codebase** – Understand existing patterns and structure
-3. **Generate PRP** – Use Advanced Template v3 with implementation focus
-4. **Validate context** – Ensure all necessary information is included
-5. **Review and refine** – Iterate until PRP is implementation-ready
+1. **Read INITIAL.md first** – Parse complete project context and requirements
+2. **Analyze codebase** – Understand existing patterns and structure across all planned features
+3. **Generate Project PRP** – Use canonical template structure with comprehensive project focus
+4. **Validate context** – Ensure all necessary information is included for the entire project
+5. **Review and refine** – Iterate until PRP provides complete project roadmap
 
 ## Research Process
 
-1. **Codebase Analysis**
-   - Search for similar features/patterns in the codebase
-   - Identify files to reference in the PRP
-   - Note existing conventions to follow
-   - Check test patterns for validation approach
+1. **Project-Wide Analysis**
+   - Identify ALL major features and capabilities needed
+   - Map feature dependencies and integration points
+   - Understand how features work together as a system
+   - Check existing patterns that apply across multiple features
 
 2. **External Research**
-   - Search for similar features/patterns online
-   - Library documentation (include specific URLs)
-   - Implementation examples (GitHub/StackOverflow/blogs)
-   - Best practices and common pitfalls
+   - Search for similar complete systems/projects
+   - Library documentation for all planned technologies
+   - Implementation examples of complete systems
+   - Best practices for system integration and architecture
 
 3. **User Clarification** (if needed)
-   - Specific patterns to mirror and where to find them?
-   - Integration requirements and where to find them?
+   - Which features are core vs. nice-to-have?
+   - Integration requirements between features?
+   - Priority order for feature implementation?
 
 ## PRP Generation
 
-Using `PRPs/templates/prp-base-{tech}.md` as the template:
+Using the canonical template structure from `assets/agent-kit/PRP-template/prp.template.json`:
 
 ### Required Sections (ALL must be present)
 
-- **Goal** – Specific, measurable feature goal with deliverable
-- **User Persona** – Target user, use case, user journey, pain points
-- **Why** – Business value, integration benefits, problem solving
-- **What** – User-visible behavior and technical requirements
-- **All Needed Context** – Documentation, references, codebase analysis
-- **Implementation Blueprint** – Data models, tasks, patterns, integration
-- **Validation Loop** – 4-level validation system
-- **Anti-Patterns** – Specific things to avoid
+- **goal** – Complete project goal with all major deliverables
+- **why** – Business value of the entire project, integration benefits, strategic importance
+- **what** – Complete project scope with all features and capabilities
+- **context** – Documentation, references, codebase analysis, principles, trees for entire project
+- **implementation_blueprint** – Phases covering all features, tasks, patterns, integration points
+- **validation** – 4-level validation system covering entire project with final checklist and summary
 
 ### All Needed Context to include (and pass to the AI agent)
 
-- **Current codebase tree** (run `tree` command)
-- **Desired codebase tree** with file responsibilities
-- **Documentation**: URLs with specific sections
-- **Code Examples**: Real snippets from the codebase
-- **Gotchas**: Library quirks, version issues
-- **Patterns**: Existing approaches to follow with exact file paths
+- **context.current_tree** – Current codebase structure (run `tree` command)
+- **context.desired_tree** – Target structure with ALL planned files and responsibilities
+- **context.documentation** – URLs for all technologies and frameworks to be used
+- **context.existing_code** – Real snippets from the codebase with file paths
+- **context.gotchas** – Library quirks, version issues, anti-patterns for entire project
+- **context.principles** – Context engineering principles to follow
+- **context.dependencies** – All required packages and services for complete project
+- **context.environment_variables** – All configuration needed
+- **context.config_notes** – Setup and configuration guidance for entire system
 
-### Implementation Blueprint
+### Project-Wide Implementation Blueprint
 
-- Start with pseudocode showing the approach
-- Reference real files for patterns
-- Include an error handling strategy
-- List tasks to fulfill the PRP in execution order
+- **Phase-based approach** covering all major features
+- **Feature grouping** with user stories and tasks
+- **Integration points** between features clearly defined
+- **Dependency mapping** showing what builds on what
 
-Task structure standard:
-
+#### Feature Structure (for each major feature):
 ```yaml
-Task N: [ACTION] [file_path]
+Feature: [Feature Name]
+  - Epic Description: [What this feature accomplishes]
+  - User Stories:
+    - US-001: [User story description]
+    - US-002: [User story description]
+    - US-003: [User story description]
+  - Tasks:
+    - Task 1: [Specific implementation task]
+    - Task 2: [Specific implementation task]
+    - Task 3: [Specific implementation task]
+  - Dependencies: [What must be completed first]
+  - Integration Points: [How it connects to other features]
+```
+
+#### Task Structure Standard:
+```yaml
+Task N: [FEATURE_NAME]: [ACTION] [file_path]
   - IMPLEMENT: [Specific implementation details]
   - FOLLOW pattern: [exact file path and pattern description]
   - NAMING: [Naming conventions to follow]
   - DEPENDENCIES: [What must be completed first]
   - PLACEMENT: [Where in codebase this goes]
+  - FEATURE: [Feature name for Archon grouping]
 ```
 
-Pattern documentation (for each referenced pattern):
-- Exact file path
-- Specific method/class to follow
-- Key implementation details
-- Gotchas and limitations
-- Integration requirements
+### Validation (4 Levels + Final) - Project-Wide
 
-### Validation Loop (4 Levels)
-
-- **Level 1: Syntax & Style**
-  - Ruff linting and formatting
-  - MyPy type checking
-  - Zero errors before proceeding
-- **Level 2: Unit Tests**
-  - Test each component as created
-  - Follow existing test patterns
-  - Cover all public methods
-- **Level 3: Integration Testing**
-  - Service startup validation
-  - Endpoint testing
-  - Database connectivity
-  - MCP tool validation
-- **Level 4: Creative Validation**
-  - Domain-specific testing
-  - Performance validation
-  - Security scanning
-  - Load testing if applicable
+- **level_1_syntax** – Syntax, style, type checking commands for entire project
+- **level_2_unit_tests** – Unit test commands and coverage requirements for all features
+- **level_3_integration** – Integration test commands covering feature interactions
+- **level_4_end_to_end** – End-to-end validation covering complete user workflows
+- **final_checklist** – Comprehensive completion checklist for entire project
+- **summary** – Confidence score and implementation notes for complete system
 
 Executable gates (example for Python):
 
 ```bash
-# Syntax/Style
+# Syntax/Style (entire project)
 ruff check --fix && mypy .
 
-# Unit Tests
+# Unit Tests (all features)
 uv run pytest tests/ -v
+
+# Integration (feature interactions)
+uv run pytest tests/integration/ -v
+
+# End-to-End (complete workflows)
+uv run pytest tests/e2e/ -v
 ```
 
-**CRITICAL: After researching and exploring the codebase, ULTRATHINK about the PRP and plan your approach BEFORE writing it.**
+**CRITICAL: After researching and exploring the codebase, ULTRATHINK about the complete project scope and plan your approach BEFORE writing the PRP.**
 
 ## Integration with Archon Workflow
 
 When using with Archon CE Template:
-1. Language detection from `INITIAL.md` drives template adaptation
-2. Workflow scripts ensure proper sequence
-3. Advanced template provides implementation precision
-4. Cursor rules enhance IDE integration
-5. Validation loops ensure quality at each step
+1. **Project-wide scope** drives comprehensive planning
+2. **Feature grouping** enables epic-based task management
+3. **Task dependencies** ensure proper implementation order
+4. **Integration points** prevent feature silos
+5. **Validation loops** ensure quality across entire system
 
-## Example PRP Structure
+## Example Project-Wide PRP Structure
 
-```markdown
-## Goal
-**Feature Goal**: Implement user authentication service
-**Deliverable**: FastAPI authentication endpoints with JWT tokens
-**Success Definition**: Users can register, login, and access protected routes
-
-## Implementation Blueprint
-### Implementation Tasks
-Task 1: CREATE src/models/auth_models.py
-  - IMPLEMENT: UserRequest, UserResponse Pydantic models
-  - FOLLOW pattern: src/models/existing_model.py
-  - NAMING: CamelCase classes, snake_case fields
-
-Task 2: CREATE src/services/auth_service.py
-  - IMPLEMENT: AuthService class with async methods
-  - FOLLOW pattern: src/services/database_service.py
-  - DEPENDENCIES: Import models from Task 1
+```json
+{
+  "goal": "Build complete [PROJECT_NAME] with all core features including authentication, data management, and user interface",
+  "why": [
+    "Business value of the entire project",
+    "Integration benefits across all features",
+    "Strategic importance of complete system"
+  ],
+  "what": {
+    "description": "Complete project scope with all planned features and capabilities",
+    "success_criteria": [
+      "All planned features implemented and integrated",
+      "End-to-end workflows functional across features",
+      "Performance and security requirements met for entire system"
+    ],
+    "user_stories": [
+      "As a user, I want to authenticate so that I can access the system",
+      "As a user, I want to manage data so that I can perform my work",
+      "As a user, I want an intuitive interface so that I can use all features effectively"
+    ]
+  },
+  "context": {
+    "documentation": [
+      {"source": "https://fastapi.tiangolo.com/", "why": "Backend framework for all API features"},
+      {"source": "https://nextjs.org/docs", "why": "Frontend framework for user interface"}
+    ],
+    "existing_code": [
+      {"file": "src/models/base.py", "purpose": "Base model pattern to follow across all features"}
+    ],
+    "gotchas": [
+      "Authentication must be implemented before protected features",
+      "Database migrations must handle all planned tables",
+      "Frontend components must follow consistent design patterns"
+    ]
+  },
+  "implementation_blueprint": {
+    "phase_1_foundation": {
+      "description": "Core infrastructure and shared components",
+      "features": [
+        {
+          "name": "User Authentication System",
+          "user_stories": ["US-001: User registration", "US-002: User login", "US-003: Profile management"],
+          "tasks": [
+            {
+              "title": "User Authentication System: Set up auth models and database",
+              "feature": "User Authentication System",
+              "details": "Create database schema and Pydantic models for user authentication",
+              "files": ["src/models/user.py", "src/services/user_service.py"]
+            }
+          ]
+        }
+      ]
+    },
+    "phase_2_core_features": {
+      "description": "Primary business functionality",
+      "features": [
+        {
+          "name": "Data Management System",
+          "user_stories": ["US-004: CRUD operations", "US-005: Data validation"],
+          "tasks": [
+            {
+              "title": "Data Management System: Create CRUD service layer",
+              "feature": "Data Management System",
+              "details": "Build core data management service with validation",
+              "files": ["src/services/base_crud.py", "src/services/data_service.py"]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "validation": {
+    "level_1_syntax": ["ruff check src/", "mypy src/", "npm run lint"],
+    "level_2_unit_tests": ["uv run pytest tests/ -v", "npm run test"],
+    "level_3_integration": ["uv run pytest tests/integration/ -v", "npm run test:integration"],
+    "level_4_end_to_end": ["uv run pytest tests/e2e/ -v", "npm run test:e2e"],
+    "final_checklist": [
+      "All features implemented and integrated",
+      "End-to-end workflows functional",
+      "Performance requirements met",
+      "Security requirements satisfied"
+    ],
+    "summary": {
+      "confidence_score": "8/10",
+      "notes": "High confidence with clear feature breakdown and integration points"
+    }
+  }
+}
 ```
 
 ## Error Handling Guidance
@@ -156,45 +229,47 @@ If context is incomplete:
 3. Suggest specific additions to `INITIAL.md`
 4. Resume only when context is complete
 
-If patterns are unclear:
-1. Analyze existing codebase for patterns
-2. Document discovered patterns in the PRP
-3. Reference specific files and methods
-4. Include gotchas and limitations
+If feature scope is unclear:
+1. Analyze INITIAL.md for complete project requirements
+2. Document all planned features and capabilities
+3. Map feature dependencies and integration points
+4. Include gotchas and limitations for entire system
 
 ## Output
 
-Save as: `PRPs/{feature-name}.md`
+Save as: `PRPs/{project-name}-complete.md` (markdown format) or `PRPs/{project-name}-complete.json` (JSON format)
 
 ## Success Metrics
 
-The PRP is ready when:
-- All sections are complete and specific
-- Implementation tasks are actionable
-- Pattern references are exact
-- Validation loops are comprehensive
-- Context completeness is verified
-- Anti-patterns are documented
+The Project PRP is ready when:
+- **Complete project scope** is defined with all major features
+- **Feature breakdown** includes user stories and tasks
+- **Implementation phases** cover entire project lifecycle
+- **Integration points** between features are clearly defined
+- **Validation strategy** covers complete system
+- **Context completeness** is verified for entire project
 
-Generated PRP enables:
-- One-pass implementation success
-- Clear development roadmap
-- Comprehensive testing strategy
-- Quality assurance at each step
-- Pattern consistency across the codebase
+Generated Project PRP enables:
+- **Complete project roadmap** with all features
+- **Clear development sequence** with dependencies
+- **Comprehensive testing strategy** for entire system
+- **Quality assurance** at each phase
+- **Pattern consistency** across all features
 
 ## Quality Checklist
 
-- [ ] All required sections present
-- [ ] Context completeness validated (current/desired trees, docs, patterns)
-- [ ] Implementation tasks are specific and actionable
-- [ ] Pattern references include exact file paths
-- [ ] Validation loop defined with executable gates
-- [ ] Anti-patterns clearly documented
-- [ ] Error handling strategy documented
-- [ ] Clear implementation path
+- [ ] **Complete project scope** defined with all major features
+- [ ] **Feature breakdown** includes user stories and implementation tasks
+- [ ] **Implementation phases** cover entire project lifecycle
+- [ ] **Integration points** between features clearly defined
+- [ ] **Task dependencies** mapped for proper implementation order
+- [ ] **Validation strategy** covers complete system
+- [ ] **Context completeness** verified for entire project
+- [ ] **Archon integration** ready with feature-based task grouping
 
+Score the Project PRP on a scale of 1–10 (confidence level to succeed in one-pass implementation of the complete project using Claude Code).
+
+Remember: The goal is **complete project implementation success** through comprehensive context and feature planning.
 Score the PRP on a scale of 1–10 (confidence level to succeed in one-pass implementation using Claude Code).
 
 Remember: The goal is one-pass implementation success through comprehensive context.
-

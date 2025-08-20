@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360">
+  <defs>
+    <style>
+      .mono { font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace; font-size: 16px; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="1200" height="360" fill="#0d1117"/>
+  
+  <text class="mono" x="20" y="40" fill="#c9d1d9">$ npx github:9Mirrors-Lab/archon-agent-kit</text>
+  <text class="mono" x="20" y="70" fill="#c9d1d9">Need to install the following packages:</text>
+  <text class="mono" x="20" y="95" fill="#c9d1d9">github:9Mirrors-Lab/archon-agent-kit</text>
+  <text class="mono" x="20" y="120" fill="#c9d1d9">Ok to proceed? (y) y</text>
+
+  <text class="mono" x="20" y="160" fill="#2bbff0" font-weight="700">Archon Agent Kit Installer (Cursor + Claude Code)</text>
+  <text class="mono" x="20" y="185" fill="#c9d1d9">? Select IDE(s) to configure Cursor</text>
+  <text class="mono" x="20" y="210" fill="#c9d1d9">? Install into which directory? /path/to/your/project</text>
+  <text class="mono" x="20" y="235" fill="#ffd33d">Found existing INITIAL.md, wrote INITIAL.template.md alongside it.</text>
+  
+  <text class="mono" x="20" y="260" fill="#3fb950">✓ Installed Cursor rules in .cursor/rules</text>
+  
+  <text class="mono" x="20" y="295" fill="#c9d1d9">Done. Next steps:</text>
+  <text class="mono" x="40" y="320" fill="#8b949e">- Open your project in your IDE(s).</text>
+  <text class="mono" x="40" y="345" fill="#8b949e">- For Cursor, use the installed .mdc rules directly.</text>
+  
+</svg>
+

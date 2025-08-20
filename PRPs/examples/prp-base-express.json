@@ -6,6 +6,16 @@
   "date": "2025-08-20",
   "status": "draft",
 
+  "purpose": "Kickstart a secure Express.js API with validated routes, observability, and modern middleware.",
+
+  "core_principles": [
+    "Meta-Context Engineering",
+    "Technology Specialization",
+    "Complete Package Generation",
+    "Validation-Driven",
+    "Usability First"
+  ],
+
   "goal": "Build an Express.js API with secure middleware, zod-validated routes, and modern logging.",
 
   "why": [

@@ -6,6 +6,16 @@
   "date": "2025-08-20",
   "status": "draft",
 
+  "purpose": "Provide a production-grade starting point for Next.js App Router projects with typed APIs, robust data fetching, and secure defaults.",
+
+  "core_principles": [
+    "Meta-Context Engineering",
+    "Technology Specialization",
+    "Complete Package Generation",
+    "Validation-Driven",
+    "Usability First"
+  ],
+
   "goal": "Implement a production-ready Next.js application using the App Router with typed APIs, robust data fetching, and secure defaults.",
 
   "why": [

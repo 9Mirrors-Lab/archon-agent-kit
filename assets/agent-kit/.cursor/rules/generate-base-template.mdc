@@ -5,7 +5,7 @@ alwaysApply: false
 
 ## Purpose
 
-This rule generates technology-specific base PRP templates (`prp-base-{tech}.md`) from `INITIAL.md` files. It creates the foundational schema that Archon MCP will use to generate feature-specific PRPs.
+This rule generates technology-specific base PRP templates (`prp-base-{tech}.json`) from `INITIAL.md` files. It creates the foundational schema that Archon MCP will use to generate feature-specific PRPs.
 
 ## Core Workflow
 
@@ -204,7 +204,9 @@ archon:manage_document(
 
 ## PRP JSON Schema (Must Match Exactly)
 
-The generated base template MUST be structured JSON compatible with PRPViewer (NOT markdown):
+The generated base template MUST be structured JSON compatible with PRPViewer and MUST follow this exact field order:
+
+Order: document_type, title, version, author, date, status, purpose, core_principles, goal, why, what, context, implementation_blueprint, validation, additional_context
 
 ```json
 {
@@ -214,6 +216,16 @@ The generated base template MUST be structured JSON compatible with PRPViewer (N
   "author": "prp-creator",
   "date": "{ISO-YYYY-MM-DD}",
   "status": "draft",
+
+  "purpose": "{1-2 sentences explaining the intent of this base template for {DetectedTech}}",
+
+  "core_principles": [
+    "Meta-Context Engineering",
+    "Technology Specialization",
+    "Complete Package Generation",
+    "Validation-Driven",
+    "Usability First"
+  ],
 
   "goal": "{High-level implementation goal tailored to {DetectedTech}}",
 

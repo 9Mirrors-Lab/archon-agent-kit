@@ -6,6 +6,16 @@
   "date": "2025-08-20",
   "status": "draft",
 
+  "purpose": "Establish a solid FastAPI foundation with typed schemas, modular routers, and resilient integrations.",
+
+  "core_principles": [
+    "Meta-Context Engineering",
+    "Technology Specialization",
+    "Complete Package Generation",
+    "Validation-Driven",
+    "Usability First"
+  ],
+
   "goal": "Deliver a FastAPI service with typed models, modular routers, and resilient HTTP clients.",
 
   "why": [

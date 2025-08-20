@@ -14,16 +14,15 @@ cp -f "$SRC_DIR/.cursor/rules/generate-base-template.mdc" "$DEST_DIR/.cursor/rul
 cp -f "$SRC_DIR/.cursor/rules/create-prp.mdc" "$DEST_DIR/.cursor/rules/"
 cp -f "$SRC_DIR/.cursor/rules/execute-prp.mdc" "$DEST_DIR/.cursor/rules/"
 
-cp -f "$SRC_DIR/README-PRP.md" "$DEST_DIR/README-PRP.md"
-
-# Move INITIAL.template.md to PRP folder
-cp -f "$SRC_DIR/INITIAL.template.md" "$DEST_DIR/PRP/INITIAL.template.md"
+# Copy PRP files from the PRP folder
+cp -f "$SRC_DIR/PRP/README-PRP.md" "$DEST_DIR/README-PRP.md"
+cp -f "$SRC_DIR/PRP/INITIAL.template.md" "$DEST_DIR/PRP/INITIAL.template.md"
 
 if [[ -f "$DEST_DIR/INITIAL.md" ]]; then
-  cp -f "$SRC_DIR/INITIAL.template.md" "$DEST_DIR/INITIAL.md"
+  cp -f "$SRC_DIR/PRP/INITIAL.template.md" "$DEST_DIR/INITIAL.md"
   echo "Found existing INITIAL.md. Updated it from template."
 else
-  cp -f "$SRC_DIR/INITIAL.template.md" "$DEST_DIR/INITIAL.md"
+  cp -f "$SRC_DIR/PRP/INITIAL.template.md" "$DEST_DIR/INITIAL.md"
   echo "Created INITIAL.md from template."
 fi
 

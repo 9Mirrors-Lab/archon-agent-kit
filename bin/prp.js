@@ -66,13 +66,18 @@ async function main() {
     
     console.log(chalk.dim('Debug: Source directory exists, continuing...'));
 
-    // Common files to copy regardless of IDE
+    // Create PRP folder in destination
+    const prpDestDir = path.join(destDir, 'PRP');
+    await ensureDir(prpDestDir);
+    console.log(chalk.dim('Debug: Created PRP folder in destination'));
+
+    // Common files to copy from PRP folder
     const commonCopies = [
-      ['INITIAL.template.md', 'INITIAL.md'],
-      ['README-PRP.md', 'README-PRP.md'],
+      ['PRP/INITIAL.template.md', 'PRP/INITIAL.template.md'],
+      ['PRP/README-PRP.md', 'README-PRP.md'],
     ];
 
-    console.log(chalk.dim('Debug: About to copy common files...'));
+    console.log(chalk.dim('Debug: About to copy common files from PRP folder...'));
 
     // Copy common files
     for (const [srcRel, destRel] of commonCopies) {
@@ -82,10 +87,10 @@ async function main() {
       
       if (srcRel.endsWith('INITIAL.template.md')) {
         const destInitial = path.join(destDir, 'INITIAL.md');
-        const destTemplate = path.join(destDir, 'INITIAL.template.md');
+        const destTemplate = path.join(destDir, 'PRP', 'INITIAL.template.md');
         if (await fs.pathExists(destInitial)) {
           await copyFile(src, destTemplate);
-          console.log(chalk.yellow('Found existing INITIAL.md, wrote INITIAL.template.md alongside it.'));
+          console.log(chalk.yellow('Found existing INITIAL.md, wrote INITIAL.template.md in PRP folder.'));
         } else {
           await copyFile(src, destInitial);
           console.log(chalk.green('Created INITIAL.md from template.'));
@@ -135,6 +140,7 @@ async function main() {
     console.log(chalk.dim(' - Open your project in your IDE(s).'));
     console.log(chalk.dim(' - For Cursor, use the installed .mdc rules directly.'));
     console.log(chalk.dim(' - For Claude Code, open the Commands panel and look under ArchonAgentKit/rules.'));
+    console.log(chalk.dim(' - PRP templates are available in the PRP/ folder.'));
     
   } catch (error) {
     console.error(chalk.red('Installer failed:'), error);

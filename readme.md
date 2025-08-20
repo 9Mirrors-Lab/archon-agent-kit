@@ -59,21 +59,18 @@ npx archon-agent-kit
 npx github:your-org/archon-agent-kit
 ```
 
+Next steps:
+- Open your project in your IDE(s).
+- For Cursor, use the installed .mdc rules directly.
+- For Claude Code, open the Commands panel and look under ArchonAgentKit/rules.
+
+#### Setup (Interactive Example)
+![Interactive setup example](assets/setup-install.svg)
+
 You'll be prompted to:
 - Select IDE(s): Cursor and/or Claude Code
 - Choose a target directory
 - Inject PRP scaffolds and IDE rules
-
----
-
-### ⚙️ Non-interactive (fallback)
-
-```bash
-bash archon-agent-kit/install.sh /absolute/target/path
-```
-
-Copies base rules and templates without prompt.
-
 ---
 
 ## 🧠 How It Works with Archon
@@ -87,7 +84,7 @@ This kit connects to your Archon MCP instance and maintains the current process 
 
 ---
 
-## 🌀 PRP Workflow (End-to-End)
+## 🌀 PRP Workflow 
 
 1. **Prepare Context**
    - Edit `INITIAL.md`: add project name, feature, docs, and tech hints

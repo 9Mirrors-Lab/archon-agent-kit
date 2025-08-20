@@ -1,0 +1,102 @@
+{
+  "document_type": "prp",
+  "title": "Base Template - Next.js",
+  "version": "1.0",
+  "author": "prp-creator",
+  "date": "2025-08-20",
+  "status": "draft",
+
+  "goal": "Implement a production-ready Next.js application using the App Router with typed APIs, robust data fetching, and secure defaults.",
+
+  "why": [
+    "Leverage React Server Components for performance and simplicity",
+    "Standardize data fetching and validation across pages and routes",
+    "Ensure secure, scalable defaults aligned with Vercel/Next best practices"
+  ],
+
+  "what": {
+    "description": "App Router project with route handlers, typed contracts, zod validation, and Tailwind UI.",
+    "success_criteria": [
+      "Zero ESLint/type errors",
+      "TTFB and LCP within recommended thresholds",
+      "API handlers with input/output validation",
+      "ISR or caching configured on data routes"
+    ],
+    "user_stories": [
+      "As a user, I can view pages that render quickly with server data",
+      "As a developer, I can add a route handler with typed I/O in under 5 minutes"
+    ]
+  },
+
+  "context": {
+    "documentation": [
+      {"source": "https://nextjs.org/docs", "why": "Core framework guidance"},
+      {"source": "https://nextjs.org/docs/app/building-your-application/routing", "why": "App Router"},
+      {"source": "https://zod.dev/", "why": "Schema validation"}
+    ],
+    "existing_code": [
+      {"file": "app/page.tsx", "purpose": "Root layout and RSC pattern"},
+      {"file": "app/api/hello/route.ts", "purpose": "Route handler example"},
+      {"file": "lib/fetcher.ts", "purpose": "Server fetch helpers with caching"}
+    ],
+    "gotchas": [
+      "Client vs server components: only use 'use client' where necessary",
+      "Avoid dynamic rendering where static/ISR suffices",
+      "Validate request data at the edge of route handlers with zod"
+    ],
+    "current_state": "Fresh Next.js App Router project with minimal pages",
+    "dependencies": [
+      "next", "react", "react-dom", "zod", "@tanstack/react-query", "tailwindcss"
+    ],
+    "environment_variables": [
+      "NEXT_PUBLIC_API_URL", "NODE_ENV"
+    ]
+  },
+
+  "implementation_blueprint": {
+    "phase_1_setup": {
+      "description": "Scaffold UI/UX and linting/type checks",
+      "tasks": [
+        {"title": "Configure ESLint + Prettier + TypeScript strict", "files": [".eslintrc.cjs", "tsconfig.json"], "details": "Strict mode, import sorting, unused vars checks"},
+        {"title": "Add Tailwind CSS with base styles", "files": ["tailwind.config.ts", "app/globals.css"], "details": "Install, configure, dark mode support"}
+      ]
+    },
+    "phase_2_data": {
+      "description": "Route handlers + data fetching",
+      "tasks": [
+        {"title": "Create typed route handler", "files": ["app/api/items/route.ts"], "details": "zod input/output, proper status codes"},
+        {"title": "Implement cached server fetcher", "files": ["lib/fetcher.ts"], "details": "Next cache tags/ISR as appropriate"}
+      ]
+    },
+    "phase_3_pages": {
+      "description": "Pages with server components",
+      "tasks": [
+        {"title": "Server-rendered list page", "files": ["app/items/page.tsx"], "details": "Use server data and semantic HTML"},
+        {"title": "Client memoized component for interactions", "files": ["app/items/ClientList.tsx"], "details": "Minimize client JS; use React.memo and event handlers"}
+      ]
+    }
+  },
+
+  "validation": {
+    "level_1_syntax": ["pnpm lint", "pnpm type-check"],
+    "level_2_unit_tests": ["pnpm test"],
+    "level_3_integration": ["pnpm next build && pnpm next start -p 4000", "curl http://localhost:4000/api/items"],
+    "level_4_end_to_end": ["Lighthouse pass >= 90", "Basic security headers present"]
+  },
+
+  "additional_context": {
+    "security_considerations": [
+      "Escape/encode user content to prevent XSS",
+      "Set cache headers thoughtfully on sensitive routes",
+      "Use helmet-equivalent headers via Next config or middleware"
+    ],
+    "testing_strategies": [
+      "Test route handlers with supertest or fetch mocks",
+      "Component tests with React Testing Library"
+    ],
+    "monitoring_and_logging": [
+      "Use Vercel/Next telemetry as needed",
+      "Add server-side logging for API errors"
+    ]
+  }
+}

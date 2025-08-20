@@ -1,0 +1,100 @@
+{
+  "document_type": "prp",
+  "title": "Base Template - Express",
+  "version": "1.0",
+  "author": "prp-creator",
+  "date": "2025-08-20",
+  "status": "draft",
+
+  "goal": "Build an Express.js API with secure middleware, zod-validated routes, and modern logging.",
+
+  "why": [
+    "Fast baseline API with wide ecosystem support",
+    "Explicit validation and error mapping for reliability",
+    "Security headers and sane defaults from day one"
+  ],
+
+  "what": {
+    "description": "Express server with modular routers, centralized errors, and request validation.",
+    "success_criteria": [
+      "All routes use zod schemas for input/output",
+      "Requests and errors logged with correlation IDs",
+      "No high severity npm audit findings"
+    ],
+    "user_stories": [
+      "As a client, I get consistent JSON responses with codes and messages",
+      "As a developer, I add a new endpoint by writing a schema and handler only"
+    ]
+  },
+
+  "context": {
+    "documentation": [
+      {"source": "https://expressjs.com/", "why": "Framework docs"},
+      {"source": "https://github.com/colinhacks/zod", "why": "Validation"}
+    ],
+    "existing_code": [
+      {"file": "src/server.ts", "purpose": "App bootstrap and middleware"},
+      {"file": "src/routes/items.ts", "purpose": "Items router"},
+      {"file": "src/schemas/items.ts", "purpose": "zod schemas"}
+    ],
+    "gotchas": [
+      "Order of middleware matters (security first)",
+      "Never trust req.body without validation",
+      "Return consistent error shape"
+    ],
+    "current_state": "Node project with ts-node or tsup build",
+    "dependencies": [
+      "express", "zod", "helmet", "cors", "pino", "pino-http"
+    ],
+    "environment_variables": [
+      "PORT", "NODE_ENV", "DATABASE_URL"
+    ]
+  },
+
+  "implementation_blueprint": {
+    "phase_1_bootstrap": {
+      "description": "Core server and middleware",
+      "tasks": [
+        {"title": "Create server.ts with helmet/cors/pino", "files": ["src/server.ts"], "details": "Add request ID and JSON body limits"},
+        {"title": "Global error handler", "files": ["src/middleware/errors.ts"], "details": "Map zod errors to 400"}
+      ]
+    },
+    "phase_2_routes": {
+      "description": "Routers and validation",
+      "tasks": [
+        {"title": "Items router with CRUD", "files": ["src/routes/items.ts", "src/schemas/items.ts"], "details": "zod parse on input and serialized output"},
+        {"title": "Health and readiness endpoints", "files": ["src/routes/health.ts"], "details": "Return version and timestamps"}
+      ]
+    },
+    "phase_3_ops": {
+      "description": "Build and deploy hooks",
+      "tasks": [
+        {"title": "Dockerfile and healthcheck", "files": ["Dockerfile"], "details": "Multi-stage build; non-root user"},
+        {"title": "CI lint/test", "files": [".github/workflows/ci.yml"], "details": "Run eslint, type-check, and tests"}
+      ]
+    }
+  },
+
+  "validation": {
+    "level_1_syntax": ["npm run lint", "npm run type-check"],
+    "level_2_unit_tests": ["npm test"],
+    "level_3_integration": ["node dist/server.js & sleep 2 && curl -f http://localhost:${PORT:-3000}/health"],
+    "level_4_end_to_end": ["k6 or artillery quick load test", "security header scan"]
+  },
+
+  "additional_context": {
+    "security_considerations": [
+      "Set helmet defaults; review CSP before enabling",
+      "Avoid eval and dynamic require; lock dependencies",
+      "Never expose stack traces in prod"
+    ],
+    "testing_strategies": [
+      "Use supertest for route testing",
+      "Mock external services and DB layer"
+    ],
+    "monitoring_and_logging": [
+      "Correlate requests with request IDs",
+      "Log errors with contextual metadata"
+    ]
+  }
+}

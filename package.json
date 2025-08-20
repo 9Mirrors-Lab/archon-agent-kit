@@ -1,8 +1,8 @@
 {
   "name": "archon-agent-kit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
-  "description": "Archon Agent Kit installer (Cursor + Claude Code)",
+  "description": "Archon Agent Kit installer with embedded PRP templates and dual output generation (Cursor + Claude Code)",
   "bin": {
     "archon-agent-kit": "bin/prp.js"
   },
@@ -18,5 +18,22 @@
     "inquirer": "^8.2.7",
     "js-yaml": "^4.1.0",
     "yargs": "^17.7.2"
-  }
+  },
+  "keywords": [
+    "archon",
+    "prp",
+    "cursor",
+    "claude-code",
+    "mcp",
+    "project-management",
+    "template-generation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/9Mirrors-Lab/archon-agent-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/9Mirrors-Lab/archon-agent-kit/issues"
+  },
+  "homepage": "https://github.com/9Mirrors-Lab/archon-agent-kit#readme"
 }

@@ -139,6 +139,23 @@ Result:
 
 ---
 
+## 📚 Supported PRP Base Templates
+
+Generated files follow: `PRPs/templates/prp-base-{tech}.json` and use PRP JSON schema version `1.0`.
+
+Examples of `{tech}` identifiers this kit supports out‑of‑the‑box (selected by detection):
+
+- Frontend: `nextjs`, `react`, `vue`, `svelte`, `remix`, `angular`
+- Backend: `fastapi`, `express`, `django`, `flask`, `spring`, `dotnet`
+- Mobile: `react-native`, `flutter`, `swift`, `kotlin`
+- CLI: `click`, `typer`, `commander`, `argparse`, `clap`
+- Data layer: `postgresql`, `mongodb`, `redis`, `sqlite`, `prisma`, `drizzle`
+- Languages/Platforms: `python`, `rust`, `node`
+
+For multi‑stack projects, the primary `{tech}` is chosen based on the strongest signals in `INITIAL.md` (framework mentions, docs links, and file patterns).
+
+---
+
 ## 📁 Project Notes
 
 - Supports Cursor and Claude only
